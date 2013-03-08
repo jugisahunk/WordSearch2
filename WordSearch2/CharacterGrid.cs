@@ -28,14 +28,68 @@ namespace WordSearch2
 
         #region Methods       
 
-        public FoundWord FindWord(string word)
-        {
+        private bool ArrayEquals(char[] A, char[] B){
+            if (A.Length != B.Length) return false;
+
+            for (int i = 0; i < A.Length; i++)
+                if(A[i] != B[i])
+                    return false;
+
+            return true;
+        }
+
+        internal FoundWord LookHorizontally(Word word, int charIndex){
+            int 
+                charactersToLeft = ColumnCount % charIndex,
+                charactersToRight = ColumnCount - charactersToLeft - 1;
+
+            if (charactersToRight <= word.Length)
+            {
+                char[] possibleWord = new char[word.Length];
+                Characters.CopyTo(possibleWord,charIndex);
+
+                if(ArrayEquals(possibleWord, word.Text.ToCharArray()))
+                {
+                    int 
+                        x1 = charIndex % ColumnCount, 
+                        x2 = x1 + word.Length,
+                        y1, 
+                        y2;
+                    return new FoundWord(word,new Point(x1,y1), new Point(x2, y2));
+                }
+            }
+
+
             return null;
         }
 
-        public List<FoundWord> FindWords(List<string> words)
-        {
+        internal FoundWord FindWord(Word word)
+        {   
+            for (int i = 0; i < Characters.Length; i++)
+            {
+                char currentChar = Characters[i];
+                if (currentChar == word.FirstCharacter)
+                {
+                    //look horizontally
+                    //look vertically
+                    //look diagonally
+                }
+            }
+
             return null;
+        }
+
+        public List<FoundWord> FindWords(List<Word> words)
+        {
+            List<FoundWord> foundWords = new List<FoundWord>();
+            foreach (Word word in words)
+            {
+                FoundWord foundWord = FindWord(word);
+                if (foundWord != null)
+                    foundWords.Add(foundWord);
+            }
+
+            return foundWords;
         }
         #endregion
     }
