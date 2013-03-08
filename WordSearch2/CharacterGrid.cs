@@ -38,24 +38,76 @@ namespace WordSearch2
             return true;
         }
 
-        private FoundWordCoordinates GetPointsRightToLeft(Word word, int startIndex)
+        private FoundWord ExtractFoundWordDiagonalTopToBottomRightToLeft(Word word, int startIndex)
         {
-            int
-                x1 = startIndex % ColumnCount,
-                x2 = x1 - word.Length,
-                y1 = startIndex / ColumnCount,
-                y2 = y1;
-            return new FoundWordCoordinates(new Point(x1, y1), new Point(x2, y2));
+            char[] possibleWord = new char[word.Length];
+            int startingRowIndex = startIndex / ColumnCount;
+
+            possibleWord[0] = Characters[startIndex];
+            for (int i = 1; i < word.Length; i++)
+                possibleWord[i] = Characters[startIndex + ColumnCount - 1];
+
+            if (ArrayEquals(possibleWord, word.Text.ToCharArray()))
+            {
+
+                int
+                    x1 = startIndex % ColumnCount,
+                    x2 = x1 - word.Length,
+                    y1 = startingRowIndex,
+                    y2 = y1 + word.Length;
+
+                return new FoundWord(word, new FoundWordCoordinates(new Point(x1, y1), new Point(x2, y2)));
+            }
+
+            return null;
         }
-        
-        private FoundWordCoordinates GetPointsLeftToRight(Word word, int startIndex)
+
+        private FoundWord ExtractFoundWordDiagonalBottomToTopRightToLeft(Word word, int startIndex)
         {
+            char[] possibleWord = new char[word.Length];
+            int startingRowIndex = startIndex / ColumnCount;
+
+            possibleWord[0] = Characters[startIndex];
+            for (int i = 1; i < word.Length; i++)
+                possibleWord[i] = Characters[startIndex - ColumnCount - 1];
+
+            if (ArrayEquals(possibleWord, word.Text.ToCharArray()))
+            {
+
                 int
                     x1 = startIndex % ColumnCount,
                     x2 = x1 + word.Length,
-                    y1 = startIndex / ColumnCount,
-                    y2 = y1;
-                return new FoundWordCoordinates(new Point(x1, y1), new Point(x2, y2));
+                    y1 = startingRowIndex,
+                    y2 = y1 + word.Length;
+
+                return new FoundWord(word, new FoundWordCoordinates(new Point(x1, y1), new Point(x2, y2)));
+            }
+
+            return null;
+        }
+        
+        private FoundWord ExtractFoundWordDiagonalTopToBottomLeftToRight(Word word, int startIndex)
+        {
+            char[] possibleWord = new char[word.Length];
+            int startingRowIndex = startIndex / ColumnCount;
+
+            possibleWord[0] = Characters[startIndex];
+            for (int i = 1; i < word.Length; i++)
+                possibleWord[i] = Characters[startIndex + ColumnCount + 1];
+
+            if (ArrayEquals(possibleWord, word.Text.ToCharArray()))
+            {
+
+                int
+                    x1 = startIndex % ColumnCount,
+                    x2 = x1 + word.Length,
+                    y1 = startingRowIndex,
+                    y2 = y1 + word.Length;
+
+                return new FoundWord(word, new FoundWordCoordinates(new Point(x1, y1), new Point(x2, y2)));
+            }
+
+            return null;
         }
 
         private FoundWord ExtractFoundWordRightToLeft(Word word, int startIndex)
@@ -64,8 +116,14 @@ namespace WordSearch2
 
             Characters.CopyTo(possibleWord, startIndex - word.Length);
 
-            if (ArrayEquals(possibleWord, word.Text.ToCharArray()))
-                return new FoundWord(word, GetPointsRightToLeft(word, startIndex));
+            if (ArrayEquals(possibleWord, word.Text.ToCharArray())){
+                int
+                    x1 = startIndex % ColumnCount,
+                    x2 = x1 - word.Length,
+                    y1 = startIndex / ColumnCount,
+                    y2 = y1;
+                return new FoundWord(word,new FoundWordCoordinates(new Point(x1,y1), new Point(x2, y2)));
+            }
 
             return null;
         }
@@ -77,7 +135,14 @@ namespace WordSearch2
             Characters.CopyTo(possibleWord, startIndex);
 
             if (ArrayEquals(possibleWord, word.Text.ToCharArray()))
-                return new FoundWord(word, GetPointsLeftToRight(word, startIndex));
+            {
+                int
+                    x1 = startIndex % ColumnCount,
+                    x2 = x1 + word.Length,
+                    y1 = startIndex / ColumnCount,
+                    y2 = y1;
+                return new FoundWord(word, new FoundWordCoordinates(new Point(x1, y1), new Point(x2, y2)));
+            }
 
             return null;
         }
