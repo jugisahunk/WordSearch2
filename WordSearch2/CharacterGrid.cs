@@ -38,6 +38,50 @@ namespace WordSearch2
             return true;
         }
 
+        private FoundWordCoordinates GetPointsRightToLeft(Word word, int startIndex)
+        {
+            int
+                x1 = startIndex % ColumnCount,
+                x2 = x1 - word.Length,
+                y1 = startIndex / ColumnCount,
+                y2 = y1;
+            return new FoundWordCoordinates(new Point(x1, y1), new Point(x2, y2));
+        }
+        
+        private FoundWordCoordinates GetPointsLeftToRight(Word word, int startIndex)
+        {
+                int
+                    x1 = startIndex % ColumnCount,
+                    x2 = x1 + word.Length,
+                    y1 = startIndex / ColumnCount,
+                    y2 = y1;
+                return new FoundWordCoordinates(new Point(x1, y1), new Point(x2, y2));
+        }
+
+        private FoundWord ExtractFoundWordRightToLeft(Word word, int startIndex)
+        {
+            char[] possibleWord = new char[word.Length];
+
+            Characters.CopyTo(possibleWord, startIndex - word.Length);
+
+            if (ArrayEquals(possibleWord, word.Text.ToCharArray()))
+                return new FoundWord(word, GetPointsRightToLeft(word, startIndex));
+
+            return null;
+        }
+
+        private FoundWord ExtractFoundWordLeftToRight(Word word, int startIndex)
+        {
+            char[] possibleWord = new char[word.Length];
+
+            Characters.CopyTo(possibleWord, startIndex);
+
+            if (ArrayEquals(possibleWord, word.Text.ToCharArray()))
+                return new FoundWord(word, GetPointsLeftToRight(word, startIndex));
+
+            return null;
+        }
+
         internal FoundWord LookHorizontally(Word word, int charIndex){
             int 
                 charactersToLeft = ColumnCount % charIndex,
@@ -45,18 +89,10 @@ namespace WordSearch2
 
             if (charactersToRight <= word.Length)
             {
-                char[] possibleWord = new char[word.Length];
-                Characters.CopyTo(possibleWord,charIndex);
 
-                if(ArrayEquals(possibleWord, word.Text.ToCharArray()))
-                {
-                    int 
-                        x1 = charIndex % ColumnCount, 
-                        x2 = x1 + word.Length,
-                        y1, 
-                        y2;
-                    return new FoundWord(word,new Point(x1,y1), new Point(x2, y2));
-                }
+            }
+            else if(charactersToRight <= word.Length){
+
             }
 
 

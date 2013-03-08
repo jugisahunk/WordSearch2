@@ -8,15 +8,13 @@ namespace WordSearch2
 {
     public class FoundWord
     {
-        public FoundWord(Word word, Point a, Point b)
+        public FoundWord(Word word, FoundWordCoordinates coordinates)
         {
             Word = word;
-            A = a;
-            B = b;
+            Coordinates = coordinates;
         }
 
         public Word Word { get; set; }
-        public Point A { get; set; }
-        public Point B { get; set; }
+        public FoundWordCoordinates Coordinates { get; private set; }
     }
 }

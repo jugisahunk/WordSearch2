@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Coordinates.cs" />
     <Compile Include="FoundWord.cs" />
     <Compile Include="CharacterGrid.cs" />
     <Compile Include="Point.cs" />
