@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Express 2012 for Windows Desktop
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WordSearch2", "WordSearch2\WordSearch2.csproj", "{0FA197BC-F3E4-488D-9D74-ABC4F65C8E0D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestProject1", "UnitTestProject1\UnitTestProject1.csproj", "{0AC45C62-52E0-4583-AC1E-E61DAFE70C1C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0FA197BC-F3E4-488D-9D74-ABC4F65C8E0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0FA197BC-F3E4-488D-9D74-ABC4F65C8E0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0FA197BC-F3E4-488D-9D74-ABC4F65C8E0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0FA197BC-F3E4-488D-9D74-ABC4F65C8E0D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0AC45C62-52E0-4583-AC1E-E61DAFE70C1C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0AC45C62-52E0-4583-AC1E-E61DAFE70C1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0AC45C62-52E0-4583-AC1E-E61DAFE70C1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0AC45C62-52E0-4583-AC1E-E61DAFE70C1C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
