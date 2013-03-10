@@ -27,13 +27,31 @@ namespace WordSearch2
         public List<FoundWord> FoundWords { get; set; }
         #endregion
 
-        #region Methods  
-        
-        private bool ConfirmWord(Word word){
-        	foreach(FoundWord foundWord in FoundWords){
-        		
-        	}
+        #region Helper Methods
+
+        private bool ArrayEquals(char[] A, char[] B)
+        {
+            if (A.Length != B.Length) return false;
+
+            for (int i = 0; i < A.Length; i++)
+                if (A[i] != B[i])
+                    return false;
+
+            return true;
         }
+
+        private bool ConfirmWord(FoundWord possibleFoundWord)
+        {
+            foreach (FoundWord foundWord in FoundWords)
+                if (FoundWord.MultiCharIntersect(possibleFoundWord, foundWord))
+                    return false;
+
+            return true;
+        }
+
+        #endregion
+
+        #region Methods  
         
         private FoundWord ExtractFoundWordDiagonalBottomToTopLeftToRight(Word word, int startIndex)
         {
@@ -52,7 +70,7 @@ namespace WordSearch2
                     y1 = startingRowIndex,
                     y2 = y1 - word.Length;
 
-                return new FoundWord(word, new FoundWordCoordinates(new Point(x1, y1), new Point(x2, y2)));
+                return new BTLRFoundWord(word.Text, new FoundWordCoordinates(new Point(x1, y1), new Point(x2, y2)));
             }
 
             return null;
@@ -75,7 +93,7 @@ namespace WordSearch2
                     y1 = startingRowIndex,
                     y2 = y1 + word.Length;
 
-                return new FoundWord(word, new FoundWordCoordinates(new Point(x1, y1), new Point(x2, y2)));
+                return new TBRLFoundWord(word.Text, new FoundWordCoordinates(new Point(x1, y1), new Point(x2, y2)));
             }
 
             return null;
@@ -98,7 +116,7 @@ namespace WordSearch2
                     y1 = startingRowIndex,
                     y2 = y1 + word.Length;
 
-                return new FoundWord(word, new FoundWordCoordinates(new Point(x1, y1), new Point(x2, y2)));
+                return new BTRLFoundWord(word.Text, new FoundWordCoordinates(new Point(x1, y1), new Point(x2, y2)));
             }
 
             return null;
@@ -121,7 +139,7 @@ namespace WordSearch2
                     y1 = startingRowIndex,
                     y2 = y1 + word.Length;
 
-                return new FoundWord(word, new FoundWordCoordinates(new Point(x1, y1), new Point(x2, y2)));
+                return new TBLRFoundWord(word.Text, new FoundWordCoordinates(new Point(x1, y1), new Point(x2, y2)));
             }
 
             return null;
@@ -139,7 +157,7 @@ namespace WordSearch2
                     x2 = x1 - word.Length,
                     y1 = startIndex / ColumnCount,
                     y2 = y1;
-                return new FoundWord(word,new FoundWordCoordinates(new Point(x1,y1), new Point(x2, y2)));
+                return new RLFoundWord(word.Text,new FoundWordCoordinates(new Point(x1,y1), new Point(x2, y2)));
             }
 
             return null;
@@ -158,7 +176,7 @@ namespace WordSearch2
                     x2 = x1 + word.Length,
                     y1 = startIndex / ColumnCount,
                     y2 = y1;
-                return new FoundWord(word, new FoundWordCoordinates(new Point(x1, y1), new Point(x2, y2)));
+                return new LRFoundWord(word.Text, new FoundWordCoordinates(new Point(x1, y1), new Point(x2, y2)));
             }
 
             return null;
@@ -170,7 +188,7 @@ namespace WordSearch2
                 charactersToLeft = ColumnCount % charIndex,
                 charactersToRight = ColumnCount - charactersToLeft - 1;
 
-			FoundWord foundWord;
+			FoundWord foundWord = null;
 
             if (charactersToRight >= word.Length)
 				foundWord = ExtractFoundWordHorizontalLeftToRight(word, charIndex);
@@ -188,7 +206,7 @@ namespace WordSearch2
         		charactersAbove = rowIndex,
         		charactersBelow = RowCount - rowIndex -1;
         		
-        	FoundWord foundWord;
+        	FoundWord foundWord = null;
         		
         	if(charactersAbove >= word.Length)
         	{
@@ -199,8 +217,8 @@ namespace WordSearch2
         	{
         		//extract word vertically from top to bottom
         	}
-        	
-        	return foundWord        	
+
+            return foundWord; 	
         }
         
         internal FoundWord LookDiagonally(Word word, int charIndex){
@@ -211,52 +229,51 @@ namespace WordSearch2
         		charactersBelow = RowCount - rowIndex -1,
                 charactersToLeft = ColumnCount % charIndex,
                 charactersToRight = ColumnCount - charactersToLeft - 1;
-			
-			
-        }
-
-        internal FoundWord FindWord(Word word)
-        {   
-            for (int i = 0; i < Characters.Length; i++)
-            {
-                char currentChar = Characters[i];
-                if (currentChar == word.FirstCharacter)
-                {
-                    //look horizontally
-                    //look vertically
-                    //look diagonally
-                }
-            }
 
             return null;
+        }
+
+        internal FoundWord LookForWord(Word word, int currentIndex)
+        {
+            FoundWord foundWord = null;
+
+            //look horizontally
+            foundWord = LookHorizontally(word, currentIndex);
+
+            //look vertically
+            if (foundWord == null)
+                foundWord = LookVertically(word, currentIndex);
+
+            //look diagonally
+            if (foundWord == null)
+                foundWord = LookDiagonally(word, currentIndex);
+
+            return foundWord;
         }
 
         public List<FoundWord> FindWords(List<Word> words)
         {
             List<FoundWord> foundWords = new List<FoundWord>();
-            foreach (Word word in words)
+
+            for (int i = 0; i < Characters.Length; i++)
             {
-                FoundWord foundWord = FindWord(word);
-                if (foundWord != null)
-                    foundWords.Add(foundWord);
+                char currentCharacter = Characters[i];
+
+                IEnumerable<Word> startsWithCurrent = words.Where(x => x.FirstCharacter == currentCharacter);
+
+                foreach (Word word in startsWithCurrent)
+                {
+                    FoundWord foundWord = LookForWord(word, i);
+                    if (foundWord != null)
+                        foundWords.Add(foundWord);
+                }
+
             }
+
+            //remove any duplicates
 
             return foundWords;
         }
-        
-        #region Helper Methods
-     
-	private bool ArrayEquals(char[] A, char[] B){
-	    if (A.Length != B.Length) return false;
-
-	    for (int i = 0; i < A.Length; i++)
-		if(A[i] != B[i])
-		    return false;
-
-	    return true;
-	}        
-        
-        #endregion
         
         #endregion
     }

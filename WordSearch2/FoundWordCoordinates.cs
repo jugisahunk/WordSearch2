@@ -8,8 +8,8 @@ namespace WordSearch2
 {
     public class FoundWordCoordinates : IEquatable<FoundWordCoordinates>
     {
-        Point A {get; private set;}
-        Point B { get; private set; }
+        public Point A { get; private set; }
+        public Point B { get; private set; }
 
         public FoundWordCoordinates(Point a, Point b)
         {
@@ -17,23 +17,21 @@ namespace WordSearch2
             B = b;
         }
         
-        private string? _name;
+        private string _name;
         private string Name{
         	get{
-        		if(!_name.HasValue)
+        		if(!String.IsNullOrEmpty(_name))
         			_name = String.Format("{0}-{1}", A.ToString(), B.ToString());
         			
         		return _name;
         	}
         }
         
-
-        
-        public string ToString(){
+        public override string ToString(){
         	return Name;
         }        
         
-		public bool Equals(FoundFoundWordCoordinates other) 
+		public bool Equals(FoundWordCoordinates other) 
 		{
 			if (other == null) 
 				return false;
@@ -46,7 +44,7 @@ namespace WordSearch2
 		  if (obj == null) 
 			 return false;
 
-		  FoundFoundWordCoordinates FoundFoundWordCoordinatesObj = obj as FoundFoundWordCoordinates;
+		  FoundWordCoordinates FoundFoundWordCoordinatesObj = obj as FoundWordCoordinates;
 		  if (FoundFoundWordCoordinatesObj == null)
 			 return false;
 		  else    

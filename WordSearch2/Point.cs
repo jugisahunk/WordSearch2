@@ -14,19 +14,14 @@ namespace WordSearch2
         {
             X = ex;
             Y = wai;
+
+            _name = String.Format("({0},{1})", X, Y);
         }
         
-        private string? _name;
-        private string Name{
-        	get{
-        		if(!_name.HasValue)
-        			_name = String.Format("({0},{1})",X,Y);
-        			
-        		return _name;
-        	}
-        }
+        private string _name;
+        private string Name{ get{ return _name; } }
         
-        public string ToString(){
+        public override string ToString(){
         	return Name;
         }        
         
@@ -35,7 +30,7 @@ namespace WordSearch2
 			if (other == null) 
 				return false;
 				
-		  return X == X && Y == Y);
+		  return X == other.X && Y == other.Y;
 		}
 
 		public override bool Equals(Object obj)
@@ -43,11 +38,10 @@ namespace WordSearch2
 		  if (obj == null) 
 			 return false;
 
-		  Point PointObj = obj as Point;
-		  if (PointObj == null)
+		  if (obj.GetType() != typeof(Point))
 			 return false;
 		  else    
-			 return Equals(PointObj);   
+			 return Equals((Point)obj);   
 		}   
 
 		public override int GetHashCode()

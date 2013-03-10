@@ -41,12 +41,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Coordinates.cs" />
+    <Compile Include="DiagonalBottomToTopLeftToRightFoundWord.cs" />
+    <Compile Include="DiagonalBottomToTopRightToLeftFoundWord.cs" />
+    <Compile Include="DiagonalTopToBottomLeftToRightFoundWord.cs" />
+    <Compile Include="DiagonalTopToBottomRightToLeftFoundWord.cs" />
+    <Compile Include="Enums.cs" />
     <Compile Include="FoundWord.cs" />
     <Compile Include="CharacterGrid.cs" />
+    <Compile Include="FoundWordCoordinates.cs" />
+    <Compile Include="VerticalBottomToTopFoundWord.cs" />
+    <Compile Include="HorizontalLeftToRightFoundWord.cs" />
+    <Compile Include="HorizontalRightToLeftFoundWord.cs" />
     <Compile Include="Point.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="VerticalTopToBottomFoundWord.cs" />
     <Compile Include="Word.cs" />
   </ItemGroup>
   <ItemGroup>

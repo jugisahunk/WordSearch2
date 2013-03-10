@@ -63,39 +63,39 @@ namespace UnitTestProject1
         }
 
         [TestMethod]
-        public void FindWord_HorizontalWordExists()
+        public void LookForWord_HorizontalWordExists()
         {
-            FoundWord foundWord = _characterGrid.FindWord(new Word(AMERICA));
+            FoundWord foundWord = _characterGrid.LookForWord(new Word(AMERICA), 28);
 
             Assert.IsTrue(foundWord != null);
-            Assert.IsTrue(foundWord.A.x == 28 && foundWord.A.y == 0);
-            Assert.IsTrue(foundWord.B.x == 34 && foundWord.A.y == 0);
+            Assert.IsTrue(foundWord.Coordinates.A.X == 28 && foundWord.Coordinates.A.Y == 0);
+            Assert.IsTrue(foundWord.Coordinates.B.X == 34 && foundWord.Coordinates.A.Y == 0);
         }
 
         [TestMethod]
-        public void FindWord_VerticalWordExists()
+        public void LookForWord_VerticalWordExists()
         {
-            FoundWord foundWord = _characterGrid.FindWord(new Word(CAKE));
+            FoundWord foundWord = _characterGrid.LookForWord(new Word(CAKE), 281);
 
             Assert.IsTrue(foundWord != null);
-            Assert.IsTrue(foundWord.A.x == 41 && foundWord.A.y == 4);
-            Assert.IsTrue(foundWord.B.x == 41 && foundWord.A.y == 7);
+            Assert.IsTrue(foundWord.Coordinates.A.X == 41 && foundWord.Coordinates.A.Y == 4);
+            Assert.IsTrue(foundWord.Coordinates.B.X == 41 && foundWord.Coordinates.A.Y == 7);
         }
 
         [TestMethod]
-        public void FindWord_LeftToRightDiagonalWordExists()
+        public void LookForWord_LeftToRightDiagonalWordExists()
         {
-            FoundWord foundWord = _characterGrid.FindWord(new Word(BAD_WOLF));
+            FoundWord foundWord = _characterGrid.LookForWord(new Word(BAD_WOLF));
 
             Assert.IsTrue(foundWord != null);
-            Assert.IsTrue(foundWord.A.x == 42 && foundWord.A.y == 11);
-            Assert.IsTrue(foundWord.B.x == 36 && foundWord.A.y == 5);
+            Assert.IsTrue(foundWord.Coordinates.A.X == 42 && foundWord.Coordinates.A.Y == 11);
+            Assert.IsTrue(foundWord.Coordinates.B.X == 36 && foundWord.Coordinates.A.Y == 5);
         }
 
         [TestMethod]
-        public void FindWord_RightToLeftDiagonalWordExists()
+        public void LookForWord_RightToLeftDiagonalWordExists()
         {
-            FoundWord foundWord = _characterGrid.FindWord(new Word(FOREST_CAKE));
+            FoundWord foundWord = _characterGrid.LookForWord(new Word(FOREST_CAKE));
 
             Assert.IsTrue(foundWord != null);
             Assert.IsTrue(foundWord.A.x == 12 && foundWord.A.y == 4);
