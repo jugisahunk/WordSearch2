@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -25,21 +25,21 @@ namespace UnitTestProject1
         public void Initialize()
         {
             _rows = new List<string>(){
-                "wwwwwwwwwwwwwwwwwwwwwwwwwwwwamericawwwwwwwwwwwwwwwwwwwwwwwww",
-                "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
-                "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
-                "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
-                "wwwwwwwwwwwwwwwwwwwwwewwwwwwwwwwwwwwwwwwwcwwwwwwwwwwwwwwwwww",
-                "wwwwwwwwwwwwwwnehctikwwwwwwwwwwwwwwwfwwwwawwwwwwwwwwwwwwwwww",
-                "wwwwwwwwwwwwwwwwwwwawwwwwwwwwwwwwwwwwlwwwkwwwwwwwwwwwwwwwwww",
-                "wwwwwwwwwwwwwwwwwwcwwwwwwwwwwwwwwwwwwwowwewwwwwwwwwwwwwwwwww",
-                "wwwwwwwwwwwwwwwwwtwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
-                "wwwwwwwwwwwwwwwwswwwwwwwwwwwwwwwwwwwwwwwdwwwwwwwwwwwwwwwwwww",
-                "wwwwwwwwwwwwwwwewwwwwwwwwwwwwwwwwwwwwwwwwawwwwwwwwwwwwwwwwww",
-                "wwwwwwwwwwwwwwrwwwwwwwwwwwwwwwwwwwwwwwwwwwbwwwwwwwwwwwwwwwww",
-                "wwwwwwwwwwwwwowwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
-                "wwwwwwwwwwwwfwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
-                "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww"
+                "----------------------------america-------------------------",
+                "------------------------------------------------------------",
+                "------------------------------------------------------------",
+                "------------------------------------------------------------",
+                "---------------------e-------------------c------------------",
+                "--------------nehctik---------------f----a------------------",
+                "-------------------a-----------------l---k------------------",
+                "------------------c-------------------o--e------------------",
+                "-----------------t---------------------w--------------------",
+                "----------------s-----------------------d-------------------",
+                "---------------e-------------------------a------------------",
+                "--------------r---------------------------b-----------------",
+                "-------------o----------------------------------------------",
+                "------------f-----------------------------------------------",
+                "------------------------------------------------------------"
             };
 
             _words = new List<string>() { AMERICA, BAD_WOLF, CAKE, FOREST_CAKE, KITCHEN};
