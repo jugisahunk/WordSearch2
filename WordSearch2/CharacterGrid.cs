@@ -24,7 +24,7 @@ namespace WordSearch2
         public char[] Characters { get; private set; }
         public int RowCount { get; private set; }
         public int ColumnCount { get; private set; }
-        public List<FoundWord> FoundWords { get; set; }
+        public FoundWordList FoundWords { get; set; }
         #endregion
 
         #region Helper Methods
@@ -35,15 +35,6 @@ namespace WordSearch2
 
             for (int i = 0; i < A.Length; i++)
                 if (A[i] != B[i])
-                    return false;
-
-            return true;
-        }
-
-        private bool ConfirmWord(FoundWord possibleFoundWord)
-        {
-            foreach (FoundWord foundWord in FoundWords)
-                if (FoundWord.MultiCharIntersect(possibleFoundWord, foundWord))
                     return false;
 
             return true;
@@ -229,9 +220,9 @@ namespace WordSearch2
         }
         #endregion
 
-        public List<FoundWord> FindWords(List<Word> words)
+        public FoundWordList FindWords(List<Word> words)
         {
-            List<FoundWord> foundWords = new List<FoundWord>();
+            FoundWordList foundWords = new FoundWordList();
 
             for (int i = 0; i < Characters.Length; i++)
             {

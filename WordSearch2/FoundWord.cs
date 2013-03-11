@@ -97,14 +97,14 @@ namespace WordSearch2
         #endregion
 
         #region Static Methods
-        public static bool MultiCharIntersect(FoundWord foundWordA, FoundWord foundWordB)
+        public bool MultiCharIntersect(FoundWord foundWord)
         {
-            if (foundWordA.Orientation != foundWordB.Orientation)
+            if (this.Orientation != foundWord.Orientation)
                 return false;
 
             List<Point> 
-                listA = new List<Point>(GetPoints(foundWordA)),
-                listB = new List<Point>(GetPoints(foundWordB));
+                listA = new List<Point>(GetPoints(this)),
+                listB = new List<Point>(GetPoints(foundWord));
 
             int duplicates = 0;
             for (int i = 0; i < listA.Count; i++)
