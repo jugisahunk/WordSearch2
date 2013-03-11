@@ -9,9 +9,9 @@ namespace WordSearch2
     public abstract class FoundWord : Word, IEquatable<FoundWord>
     {
         #region .ctor
-        public FoundWord(string text, FoundWordCoordinates coordinates) : base(text)
+        public FoundWord(string text, CharacterGrid characterGrid) : base(text)
         {
-            Coordinates = coordinates;
+            Grid = characterGrid;
         }
         #endregion
 
@@ -37,7 +37,7 @@ namespace WordSearch2
 
         #region Fields and Properties
 
-        public FoundWordCoordinates Coordinates { get; private set; }
+        public FoundWordCoordinates Coordinates { get; protected set; }
         
         protected delegate Point GetPoint(FoundWord foundWord, int index);
         
@@ -50,6 +50,8 @@ namespace WordSearch2
         		return _name;
         	}
         }
+
+        internal CharacterGrid Grid { get; private set; }
         
         #endregion
 

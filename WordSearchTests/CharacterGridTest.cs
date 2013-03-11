@@ -65,7 +65,7 @@ namespace UnitTestProject1
         [TestMethod]
         public void LookForWord_HorizontalWordExists()
         {
-            FoundWord foundWord = _characterGrid.LookForWord(new Word(AMERICA), 28);
+            FoundWord foundWord = _characterGrid.FindWord(new Word(AMERICA), 28);
 
             Assert.IsTrue(foundWord != null);
             Assert.IsTrue(foundWord.Coordinates.A.X == 28 && foundWord.Coordinates.A.Y == 0);
@@ -75,7 +75,7 @@ namespace UnitTestProject1
         [TestMethod]
         public void LookForWord_VerticalWordExists()
         {
-            FoundWord foundWord = _characterGrid.LookForWord(new Word(CAKE), 281);
+            FoundWord foundWord = _characterGrid.FindWord(new Word(CAKE), 281);
 
             Assert.IsTrue(foundWord != null);
             Assert.IsTrue(foundWord.Coordinates.A.X == 41 && foundWord.Coordinates.A.Y == 4);
@@ -83,9 +83,9 @@ namespace UnitTestProject1
         }
 
         [TestMethod]
-        public void LookForWord_LeftToRightDiagonalWordExists()
+        public void LookForWord_BTRLExists()
         {
-            FoundWord foundWord = _characterGrid.LookForWord(new Word(BAD_WOLF), 690);
+            FoundWord foundWord = _characterGrid.FindWord(new Word(BAD_WOLF), 690);
 
             Assert.IsTrue(foundWord != null);
             Assert.IsTrue(foundWord.Coordinates.A.X == 42 && foundWord.Coordinates.A.Y == 11);
@@ -95,7 +95,7 @@ namespace UnitTestProject1
         [TestMethod]
         public void LookForWord_RightToLeftDiagonalWordExists()
         {
-            FoundWord foundWord = _characterGrid.LookForWord(new Word(FOREST_CAKE),780);
+            FoundWord foundWord = _characterGrid.FindWord(new Word(FOREST_CAKE),780);
 
             Assert.IsTrue(foundWord != null);
             Assert.IsTrue(foundWord.Coordinates.A.X == 12 && foundWord.Coordinates.A.Y == 4);
