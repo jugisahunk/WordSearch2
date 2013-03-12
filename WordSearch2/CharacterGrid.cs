@@ -17,6 +17,7 @@ namespace WordSearch2
             RowCount = rowCount;
             ColumnCount = columnCount;
             Characters = characters;
+            FoundWords = new FoundWordList();
         }
         #endregion
 
@@ -93,9 +94,8 @@ namespace WordSearch2
             char[] possibleWord = new char[word.Length];
             int startingRowIndex = charIndex / ColumnCount;
 
-            possibleWord[0] = Characters[charIndex];
-            for (int i = 1; i < word.Length; i++)
-                possibleWord[i] = Characters[charIndex - ColumnCount * i + 1];
+            for (int i = 0; i < word.Length; i++)
+                possibleWord[i] = Characters[charIndex - ColumnCount * i + i];
 
             return ArrayEquals(possibleWord, word.Text.ToCharArray());
         }
@@ -105,9 +105,8 @@ namespace WordSearch2
             char[] possibleWord = new char[word.Length];
             int startingRowIndex = charIndex / ColumnCount;
 
-            possibleWord[0] = Characters[charIndex];
-            for (int i = 1; i < word.Length; i++)
-                possibleWord[i] = Characters[charIndex - ColumnCount * i - 1];
+            for (int i = 0; i < word.Length; i++)
+                possibleWord[i] = Characters[charIndex - ColumnCount * i - i];
 
             return ArrayEquals(possibleWord, word.Text.ToCharArray());
         }
@@ -117,9 +116,8 @@ namespace WordSearch2
             char[] possibleWord = new char[word.Length];
             int startingRowIndex = charIndex / ColumnCount;
 
-            possibleWord[0] = Characters[charIndex];
-            for (int i = 1; i < word.Length; i++)
-                possibleWord[i] = Characters[charIndex + ColumnCount * i + 1];
+            for (int i = 0; i < word.Length; i++)
+                possibleWord[i] = Characters[charIndex + ColumnCount * i + i];
 
             return ArrayEquals(possibleWord, word.Text.ToCharArray());
         }
@@ -129,9 +127,8 @@ namespace WordSearch2
             char[] possibleWord = new char[word.Length];
             int startingRowIndex = charIndex / ColumnCount;
 
-            possibleWord[0] = Characters[charIndex];
-            for (int i = 1; i < word.Length; i++)
-                possibleWord[i] = Characters[charIndex + ColumnCount * i - 1];
+            for (int i = 0; i < word.Length; i++)
+                possibleWord[i] = Characters[charIndex + ColumnCount * i - i];
 
             return ArrayEquals(possibleWord, word.Text.ToCharArray());
         }
@@ -139,23 +136,25 @@ namespace WordSearch2
 
         #region Look
 
-        internal FoundWord LookHorizontally(Word word, int charIndex)
+        internal void LookHorizontally(Word word, int charIndex)
         {
             // ColumnCount 10, charIndex 5, char to left 5, char to right 4
             int
                 charactersToLeft = charIndex % ColumnCount,
                 charactersToRight = ColumnCount - charactersToLeft - 1;
 
-            if (charactersToRight >= word.Length && LookToRight(word, charIndex))
-                return new LRFoundWord(word.Text, charIndex, this);
+            FoundWord foundWord;
 
-            if (charactersToLeft >= word.Length && LookToLeft(word, charIndex))
-                return new RLFoundWord(word.Text, charIndex, this);
+            if (charactersToRight >= word.LengthMinusOne && LookToRight(word, charIndex))
+                if(FoundWords.Add(new LRFoundWord(word.Text, charIndex, this)))
+                    return;
 
-            return null;
+            if (charactersToLeft >= word.LengthMinusOne && LookToLeft(word, charIndex))
+                if(FoundWords.Add(new RLFoundWord(word.Text, charIndex, this)))
+                    return;
         }
 
-        internal FoundWord LookVertically(Word word, int charIndex)
+        internal void LookVertically(Word word, int charIndex)
         {
             //ColumnCount 20, RowCount 10, charIndex 15, rowIndex 0, charactersAbove 0, charactersBelow 9
             int
@@ -163,16 +162,16 @@ namespace WordSearch2
                 charactersAbove = rowIndex,
                 charactersBelow = RowCount - rowIndex - 1;
 
-            if (charactersAbove >= word.Length && LookUp(word, charIndex))
-                return new BTFoundWord(word.Text, charIndex, this);
+            if (charactersAbove >= word.LengthMinusOne && LookUp(word, charIndex))
+                if (FoundWords.Add(new BTFoundWord(word.Text, charIndex, this)))
+                    return;
 
-            if (charactersBelow >= word.Length && LookDown(word, charIndex))
-                return new TBFoundWord(word.Text, charIndex, this);
-
-            return null;
+            if (charactersBelow >= word.LengthMinusOne && LookDown(word, charIndex))
+                if(FoundWords.Add(new TBFoundWord(word.Text, charIndex, this)))
+                    return;
         }
 
-        internal FoundWord LookDiagonally(Word word, int charIndex)
+        internal void LookDiagonally(Word word, int charIndex)
         {
             //ColumnCount 20, RowCount 10, charIndex 15, rowIndex 0, charactersAbove 0, charactersBelow 9
             int
@@ -182,66 +181,46 @@ namespace WordSearch2
                 charactersToLeft = charIndex % ColumnCount,
                 charactersToRight = ColumnCount - charactersToLeft - 1;
 
-            if (charactersAbove >= word.Length)
+            if (charactersAbove >= word.LengthMinusOne)
             {
-                if (charactersToRight >= word.Length && LookUpAndRight(word, charIndex))
-                    return new BTLRFoundWord(word.Text, charIndex, this);
-                if (charactersToLeft >= word.Length && LookUpAndLeft(word, charIndex))
-                    return new BTRLFoundWord(word.Text, charIndex, this);
+                if (charactersToRight >= word.LengthMinusOne && LookUpAndRight(word, charIndex))
+                    if(FoundWords.Add(new BTLRFoundWord(word.Text, charIndex, this)))
+                        return;
+                if (charactersToLeft >= word.LengthMinusOne && LookUpAndLeft(word, charIndex))
+                    if(FoundWords.Add(new BTRLFoundWord(word.Text, charIndex, this)))
+                        return;
             }
 
-            if (charactersBelow <= word.Length)
+            if (charactersBelow >= word.LengthMinusOne)
             {
-                if (charactersToRight >= word.Length && LookDownAndRight(word, charIndex))
-                    return new TBLRFoundWord(word.Text, charIndex, this);
-                if (charactersToLeft >= word.Length && LookDownAndLeft(word, charIndex))
-                    return new TBRLFoundWord(word.Text, charIndex, this);
+                if (charactersToRight >= word.LengthMinusOne && LookDownAndRight(word, charIndex))
+                    if(FoundWords.Add(new TBLRFoundWord(word.Text, charIndex, this)))
+                        return;
+                if (charactersToLeft >= word.LengthMinusOne && LookDownAndLeft(word, charIndex))
+                    if(FoundWords.Add(new TBRLFoundWord(word.Text, charIndex, this)))
+                        return;
             }
-
-            return null;
         }
 
-        internal FoundWord FindWord(Word word, int currentIndex)
+        internal void FindWord(Word word, int currentIndex)
         {
-            FoundWord foundWord = null;
-
-            //look horizontally
-            foundWord = LookHorizontally(word, currentIndex);
-
-            //look vertically
-            if (foundWord == null)
-                foundWord = LookVertically(word, currentIndex);
-
-            //look diagonally
-            if (foundWord == null)
-                foundWord = LookDiagonally(word, currentIndex);
-
-            return foundWord;
+            LookHorizontally(word, currentIndex);
+            LookVertically(word, currentIndex);
+            LookDiagonally(word, currentIndex);
         }
         #endregion
 
-        public FoundWordList FindWords(List<Word> words)
+        public void FindWords(IEnumerable<Word> words)
         {
-            FoundWordList foundWords = new FoundWordList();
-
-            for (int i = 0; i < Characters.Length; i++)
-            {
-                char currentCharacter = Characters[i];
-
-                IEnumerable<Word> startsWithCurrent = words.Where(x => x.FirstCharacter == currentCharacter);
-
-                foreach (Word word in startsWithCurrent)
-                {
-                    FoundWord foundWord = FindWord(word, i);
-                    if (foundWord != null)
-                        foundWords.Add(foundWord); //TODO creat FoundWordCollection and overload the add to keep out found words that intersect existing found words.
-                }
-
-            }            
-
-            return foundWords;
+            if (words.Count() == 0)
+                return;
+            
+            foreach (Word currentWord in words)
+                for (int i = 0; i < Characters.Length; i++)
+                    FindWord(currentWord, i);
         }
 
         #endregion
     }
+
 }

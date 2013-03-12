@@ -20,8 +20,8 @@ namespace WordSearch2
         private string _name;
         private string Name{
         	get{
-        		if(!String.IsNullOrEmpty(_name))
-        			_name = String.Format("{0}-{1}", A.ToString(), B.ToString());
+        		if(String.IsNullOrEmpty(_name))
+        			_name = String.Format("{0}/{1}", A.ToString(), B.ToString());
         			
         		return _name;
         	}

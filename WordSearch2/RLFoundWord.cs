@@ -12,8 +12,8 @@ namespace WordSearch2
             : base(wordText, characterGrid)
         {
             Coordinates = new FoundWordCoordinates(
-                new Point(startingIndex & Grid.ColumnCount, startingIndex / Grid.ColumnCount),
-                new Point((startingIndex & Grid.ColumnCount) - Length + 1, startingIndex / Grid.ColumnCount));
+                new Point(startingIndex % Grid.ColumnCount, startingIndex / Grid.ColumnCount),
+                new Point((startingIndex % Grid.ColumnCount) - Length + 1, startingIndex / Grid.ColumnCount));
 
             GetPointHandler = (FoundWord foundWord, int index) => { return new Point(foundWord.Coordinates.A.X - index, foundWord.Coordinates.A.Y); };
         }

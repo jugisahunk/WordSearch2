@@ -44,6 +44,7 @@
     <Compile Include="BTLRFoundWord.cs" />
     <Compile Include="BTRLFoundWord.cs" />
     <Compile Include="FoundWordList.cs" />
+    <Compile Include="Puzzle.cs" />
     <Compile Include="TBLRFoundWord.cs" />
     <Compile Include="TBRLFoundWord.cs" />
     <Compile Include="Enums.cs" />

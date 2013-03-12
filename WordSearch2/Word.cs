@@ -14,22 +14,14 @@ namespace WordSearch2
             if (String.IsNullOrEmpty(text))
                 throw new ArgumentException("Text cannot be null");
 
-            Text = text;
+            OriginalText = text;
+            Text = text.ToLower().Replace(" ", String.Empty);
         }
 
         public int Length { get { return Text.Length; } }
 
+        public string OriginalText { get; private set; }
         public string Text { get; private set; }
-
-        private string _lowerText;
-        public string LowerText {
-        	get{
-        		if(!String.IsNullOrEmpty(_lowerText))
-        			_lowerText = Text.ToLower();
-        			
-        		return _lowerText;
-        	}
-        }
 
         private char _firstCharacter;
         public char FirstCharacter {
@@ -40,6 +32,26 @@ namespace WordSearch2
 
                 return _firstCharacter;
             }
-        }        
+        }
+
+        private int? _lengthMinusOne;
+        public int LengthMinusOne
+        {
+            get
+            {
+                if (!_lengthMinusOne.HasValue)
+                    _lengthMinusOne = Length - 1;
+
+                return _lengthMinusOne.Value;
+            }
+        }
+    }
+
+    public class DescendingComparer : IComparer<Word>
+    {
+        public int Compare(Word a, Word b)
+        {
+            return string.Compare(a.Text, b.Text) * -1;
+        }
     }
 }

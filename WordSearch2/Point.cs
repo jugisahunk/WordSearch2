@@ -15,7 +15,7 @@ namespace WordSearch2
             X = ex;
             Y = wai;
 
-            _name = String.Format("({0},{1})", X, Y);
+            _name = String.Format("{0}-{1}", Y, X);
         }
         
         private string _name;

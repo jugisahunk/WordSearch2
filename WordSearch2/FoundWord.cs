@@ -44,8 +44,8 @@ namespace WordSearch2
         private string _name;
         private string Name{
         	get{
-        		if(!String.IsNullOrEmpty(_name))
-        			_name = String.Format("\"{0}\": {1}",this.Text, Coordinates.ToString());
+        		if(String.IsNullOrEmpty(_name))
+        			_name = String.Format("{0} {1}",this.OriginalText, Coordinates.ToString());
         			
         		return _name;
         	}
@@ -57,7 +57,7 @@ namespace WordSearch2
 
         #region Methods
 
-        public string ToString(){
+        public new string ToString(){
         	return Name;
         }        
 

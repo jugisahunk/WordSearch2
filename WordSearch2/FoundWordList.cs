@@ -11,40 +11,36 @@ namespace WordSearch2
     {
 
         #region .ctor
-        public FoundWordList() : this(null) { }
 
-        public FoundWordList(IEnumerable<FoundWord> foundWords)
+        public FoundWordList() { }
+        
+        public FoundWordList(IEnumerable<FoundWord> foundWords) 
         {
-            Items = new List<FoundWord>(foundWords);
+            base.AddRange(foundWords);
         }
         #endregion
 
-        List<FoundWord> Items;
-
         #region new IList<FoundWord> Members
 
-        public new void Insert(int index, FoundWord item)
+        public new bool Add(FoundWord item)
         {
-            throw new NotImplementedException();
+            if (item != null)
+            {
+                FoundWord multiCharIntersect = FindMultiCharIntersect(item);
+                if (multiCharIntersect == null){
+                    base.Add(item);
+                    return true;
+                }                
+            }
+            return false;
         }
 
-        public new void Add(FoundWord item)
-        {
-            FoundWord multiCharIntersect = FindMultiCharIntersect(item);
-            if (multiCharIntersect == null)
-                Items.Add(item);
-            else if (item.Length > multiCharIntersect.Length)
-            {
-                Items.Remove(multiCharIntersect);
-                Items.Add(item);
-            }
-        }
         #endregion
 
         #region Methods
         private FoundWord FindMultiCharIntersect(FoundWord item)
         {
-            foreach (FoundWord foundWord in Items)
+            foreach (FoundWord foundWord in this)
                 if (item.MultiCharIntersect(foundWord))
                     return foundWord;
 
