@@ -46,12 +46,4 @@ namespace WordSearch2
             }
         }
     }
-
-    public class DescendingComparer : IComparer<Word>
-    {
-        public int Compare(Word a, Word b)
-        {
-            return string.Compare(a.Text, b.Text) * -1;
-        }
-    }
 }

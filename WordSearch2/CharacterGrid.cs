@@ -35,7 +35,7 @@ namespace WordSearch2
             if (A.Length != B.Length) return false;
 
             for (int i = 0; i < A.Length; i++)
-                if (A[i] != B[i])
+                if (char.ToUpper(A[i]) != char.ToUpper(B[i]))
                     return false;
 
             return true;
@@ -142,9 +142,7 @@ namespace WordSearch2
             int
                 charactersToLeft = charIndex % ColumnCount,
                 charactersToRight = ColumnCount - charactersToLeft - 1;
-
-            FoundWord foundWord;
-
+            
             if (charactersToRight >= word.LengthMinusOne && LookToRight(word, charIndex))
                 if(FoundWords.Add(new LRFoundWord(word.Text, charIndex, this)))
                     return;
